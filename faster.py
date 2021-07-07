@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+import sys
+
 from ctypes import *
 
 if __name__ == '__main__':
   # fast functions
-  ff = CDLL("/Users/pwschne/fun/picadinhos/slices.so")
+  ff = CDLL(sys.argv[1])
 
   best = 0
   n = 100000
