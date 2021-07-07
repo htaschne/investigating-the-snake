@@ -11,7 +11,7 @@ Don't you like when you can code in a high level, interpreted, super cool and di
 So the experiment consists in implementing the same algorithm in C and Python and comparing the time each of them takes with the time the Python version which calls C takes.
 
 ## Setup
-For the test I've used a costly function which generates the [number of divisors of highly composite odd numbers](https://oeis.org/A053640) up until ```100000```. It's not an optimized on purpose.
+For the test I've used a costly function which generates the [number of divisors of highly composite odd numbers](https://oeis.org/A053640) up until ```100000```. It's not optimized on purpose.
 
 ## Benchmarking
 I've used the ```time``` program to measure the time each program takes. The results I've found are in the ```benchmark_``` files.
