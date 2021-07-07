@@ -1,0 +1,20 @@
+found new best at: 0 = 1
+found new best at: 1 = 2
+found new best at: 9 = 3
+found new best at: 15 = 4
+found new best at: 45 = 6
+found new best at: 105 = 8
+found new best at: 225 = 9
+found new best at: 315 = 12
+found new best at: 945 = 16
+found new best at: 1575 = 18
+found new best at: 2835 = 20
+found new best at: 3465 = 24
+found new best at: 10395 = 32
+found new best at: 17325 = 36
+found new best at: 31185 = 40
+found new best at: 45045 = 48
+
+real    21m9.137s
+user    21m4.526s
+sys     0m1.047s
