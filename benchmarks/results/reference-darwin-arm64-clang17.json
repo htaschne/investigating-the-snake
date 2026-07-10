@@ -1,0 +1,570 @@
+{
+  "schema_version": 1,
+  "timestamp": "2026-07-10T20:14:50.168385+00:00",
+  "git": {
+    "commit": "8b5828270f122bc096adb99e9f3a80c23615fcd7",
+    "dirty": false
+  },
+  "system": {
+    "os": "Darwin",
+    "os_release": "25.5.0",
+    "architecture": "arm64",
+    "machine": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "python_version": "3.13.13 (main, Apr  7 2026, 18:19:01) [Clang 17.0.0 (clang-1700.3.19.1)]",
+    "compiler": "/usr/bin/cc",
+    "compiler_version": [
+      "Apple clang version 17.0.0 (clang-1700.3.19.1)",
+      "Target: arm64-apple-darwin25.5.0",
+      "Thread model: posix",
+      "InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    ],
+    "cpu": "arm arm64"
+  },
+  "config": {
+    "limit": 100000,
+    "warmups": 1,
+    "runs": 5,
+    "seed": 42,
+    "include_python": false,
+    "timing_authority": "python time.perf_counter_ns",
+    "standalone_c_process_startup_included": true,
+    "ctypes_and_python_in_process": true
+  },
+  "workload": {
+    "checksum_algorithm": "uint64 checksum = checksum * 1315423911 + (slices(i) ^ (i + 0x9e3779b97f4a7c15))",
+    "expected_checksum": "14011015563422644207",
+    "checksum_by_case": {
+      "standalone-c-O0": "14011015563422644207",
+      "ctypes-O0": "14011015563422644207",
+      "standalone-c-O1": "14011015563422644207",
+      "ctypes-O1": "14011015563422644207",
+      "standalone-c-O2": "14011015563422644207",
+      "ctypes-O2": "14011015563422644207",
+      "standalone-c-O3": "14011015563422644207",
+      "ctypes-O3": "14011015563422644207",
+      "standalone-c-Os": "14011015563422644207",
+      "ctypes-Os": "14011015563422644207"
+    }
+  },
+  "builds": [
+    {
+      "optimization": "O0",
+      "executable": "/Users/htaschne/clones/investigating-the-snake/build/bench/O0/bin/benchmark-slices",
+      "library": "/Users/htaschne/clones/investigating-the-snake/build/bench/O0/lib/libslices.dylib",
+      "executable_size_bytes": 33744,
+      "library_size_bytes": 16784,
+      "commands": [
+        "cc -Iinclude -std=c11 -O0 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.o",
+        "cc -Iinclude -std=c11 -O0 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O0 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/lib/libslices.dylib"
+      ]
+    },
+    {
+      "optimization": "O1",
+      "executable": "/Users/htaschne/clones/investigating-the-snake/build/bench/O1/bin/benchmark-slices",
+      "library": "/Users/htaschne/clones/investigating-the-snake/build/bench/O1/lib/libslices.dylib",
+      "executable_size_bytes": 33664,
+      "library_size_bytes": 16784,
+      "commands": [
+        "cc -Iinclude -std=c11 -O1 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.o",
+        "cc -Iinclude -std=c11 -O1 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O1 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/lib/libslices.dylib"
+      ]
+    },
+    {
+      "optimization": "O2",
+      "executable": "/Users/htaschne/clones/investigating-the-snake/build/bench/O2/bin/benchmark-slices",
+      "library": "/Users/htaschne/clones/investigating-the-snake/build/bench/O2/lib/libslices.dylib",
+      "executable_size_bytes": 33664,
+      "library_size_bytes": 16784,
+      "commands": [
+        "cc -Iinclude -std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.o",
+        "cc -Iinclude -std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/lib/libslices.dylib"
+      ]
+    },
+    {
+      "optimization": "O3",
+      "executable": "/Users/htaschne/clones/investigating-the-snake/build/bench/O3/bin/benchmark-slices",
+      "library": "/Users/htaschne/clones/investigating-the-snake/build/bench/O3/lib/libslices.dylib",
+      "executable_size_bytes": 33664,
+      "library_size_bytes": 16784,
+      "commands": [
+        "cc -Iinclude -std=c11 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.o",
+        "cc -Iinclude -std=c11 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/lib/libslices.dylib"
+      ]
+    },
+    {
+      "optimization": "Os",
+      "executable": "/Users/htaschne/clones/investigating-the-snake/build/bench/Os/bin/benchmark-slices",
+      "library": "/Users/htaschne/clones/investigating-the-snake/build/bench/Os/lib/libslices.dylib",
+      "executable_size_bytes": 33664,
+      "library_size_bytes": 16784,
+      "commands": [
+        "cc -Iinclude -std=c11 -Os -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.o",
+        "cc -Iinclude -std=c11 -Os -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -Os -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/lib/libslices.dylib"
+      ]
+    }
+  ],
+  "assembly": [
+    {
+      "optimization": "O0",
+      "path": "/Users/htaschne/clones/investigating-the-snake/build/bench/asm/slices-O0.s",
+      "command": [
+        "cc",
+        "-Iinclude",
+        "-std=c11",
+        "-O0",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-Wconversion",
+        "-Wsign-conversion",
+        "-S",
+        "src/slices.c",
+        "-o",
+        "/Users/htaschne/clones/investigating-the-snake/build/bench/asm/slices-O0.s"
+      ]
+    },
+    {
+      "optimization": "O2",
+      "path": "/Users/htaschne/clones/investigating-the-snake/build/bench/asm/slices-O2.s",
+      "command": [
+        "cc",
+        "-Iinclude",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-Wconversion",
+        "-Wsign-conversion",
+        "-S",
+        "src/slices.c",
+        "-o",
+        "/Users/htaschne/clones/investigating-the-snake/build/bench/asm/slices-O2.s"
+      ]
+    },
+    {
+      "optimization": "O3",
+      "path": "/Users/htaschne/clones/investigating-the-snake/build/bench/asm/slices-O3.s",
+      "command": [
+        "cc",
+        "-Iinclude",
+        "-std=c11",
+        "-O3",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-Wconversion",
+        "-Wsign-conversion",
+        "-S",
+        "src/slices.c",
+        "-o",
+        "/Users/htaschne/clones/investigating-the-snake/build/bench/asm/slices-O3.s"
+      ]
+    }
+  ],
+  "execution_order": [
+    {
+      "phase": "warmup",
+      "iteration": 0,
+      "case_ids": [
+        "ctypes-O3",
+        "ctypes-O1",
+        "standalone-c-O1",
+        "standalone-c-Os",
+        "ctypes-O2",
+        "standalone-c-O3",
+        "ctypes-Os",
+        "standalone-c-O2",
+        "standalone-c-O0",
+        "ctypes-O0"
+      ]
+    },
+    {
+      "phase": "measured",
+      "iteration": 0,
+      "case_ids": [
+        "ctypes-O1",
+        "ctypes-O2",
+        "standalone-c-O1",
+        "standalone-c-O2",
+        "ctypes-O0",
+        "standalone-c-Os",
+        "ctypes-O3",
+        "standalone-c-O0",
+        "standalone-c-O3",
+        "ctypes-Os"
+      ]
+    },
+    {
+      "phase": "measured",
+      "iteration": 1,
+      "case_ids": [
+        "ctypes-O3",
+        "ctypes-O2",
+        "standalone-c-O0",
+        "standalone-c-O1",
+        "standalone-c-O2",
+        "ctypes-Os",
+        "ctypes-O0",
+        "standalone-c-O3",
+        "ctypes-O1",
+        "standalone-c-Os"
+      ]
+    },
+    {
+      "phase": "measured",
+      "iteration": 2,
+      "case_ids": [
+        "ctypes-O3",
+        "standalone-c-Os",
+        "ctypes-O1",
+        "standalone-c-O0",
+        "standalone-c-O1",
+        "ctypes-Os",
+        "ctypes-O0",
+        "standalone-c-O2",
+        "ctypes-O2",
+        "standalone-c-O3"
+      ]
+    },
+    {
+      "phase": "measured",
+      "iteration": 3,
+      "case_ids": [
+        "ctypes-Os",
+        "standalone-c-O3",
+        "ctypes-O3",
+        "ctypes-O1",
+        "standalone-c-O0",
+        "standalone-c-O1",
+        "standalone-c-O2",
+        "standalone-c-Os",
+        "ctypes-O2",
+        "ctypes-O0"
+      ]
+    },
+    {
+      "phase": "measured",
+      "iteration": 4,
+      "case_ids": [
+        "standalone-c-Os",
+        "standalone-c-O0",
+        "ctypes-O1",
+        "standalone-c-O1",
+        "ctypes-O3",
+        "ctypes-O2",
+        "ctypes-Os",
+        "standalone-c-O2",
+        "ctypes-O0",
+        "standalone-c-O3"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "standalone-c-O0",
+      "implementation": "standalone-c",
+      "optimization": "O0",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 33744,
+      "durations_ns": [
+        11863073667,
+        11780545333,
+        13330673959,
+        11428974416,
+        11597063959
+      ],
+      "statistics": {
+        "median_ns": 11780545333,
+        "mean_ns": 12000066266,
+        "stdev_ns": 762566391,
+        "min_ns": 11428974416,
+        "max_ns": 13330673959
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -O0 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.o",
+        "cc -Iinclude -std=c11 -O0 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O0 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "ctypes-O0",
+      "implementation": "ctypes",
+      "optimization": "O0",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 16784,
+      "durations_ns": [
+        11514727125,
+        11329587583,
+        11069176917,
+        11211949583,
+        11846847166
+      ],
+      "statistics": {
+        "median_ns": 11329587583,
+        "mean_ns": 11394457674,
+        "stdev_ns": 301017398,
+        "min_ns": 11069176917,
+        "max_ns": 11846847166
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -O0 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.o",
+        "cc -Iinclude -std=c11 -O0 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O0 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O0/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O0/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "standalone-c-O1",
+      "implementation": "standalone-c",
+      "optimization": "O1",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 33664,
+      "durations_ns": [
+        4297822458,
+        4366783375,
+        5007930291,
+        4216215209,
+        4286792375
+      ],
+      "statistics": {
+        "median_ns": 4297822458,
+        "mean_ns": 4435108741,
+        "stdev_ns": 324635383,
+        "min_ns": 4216215209,
+        "max_ns": 5007930291
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -O1 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.o",
+        "cc -Iinclude -std=c11 -O1 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O1 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "ctypes-O1",
+      "implementation": "ctypes",
+      "optimization": "O1",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 16784,
+      "durations_ns": [
+        4316261167,
+        4313717000,
+        4498122542,
+        4167643834,
+        4302758750
+      ],
+      "statistics": {
+        "median_ns": 4313717000,
+        "mean_ns": 4319700658,
+        "stdev_ns": 117569457,
+        "min_ns": 4167643834,
+        "max_ns": 4498122542
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -O1 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.o",
+        "cc -Iinclude -std=c11 -O1 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O1 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O1/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O1/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "standalone-c-O2",
+      "implementation": "standalone-c",
+      "optimization": "O2",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 33664,
+      "durations_ns": [
+        4473106500,
+        4394084166,
+        4264637542,
+        4274440542,
+        4408212833
+      ],
+      "statistics": {
+        "median_ns": 4394084166,
+        "mean_ns": 4362896316,
+        "stdev_ns": 90348995,
+        "min_ns": 4264637542,
+        "max_ns": 4473106500
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.o",
+        "cc -Iinclude -std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "ctypes-O2",
+      "implementation": "ctypes",
+      "optimization": "O2",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 16784,
+      "durations_ns": [
+        4328516375,
+        4320796875,
+        4238566542,
+        4258472584,
+        4317425208
+      ],
+      "statistics": {
+        "median_ns": 4317425208,
+        "mean_ns": 4292755516,
+        "stdev_ns": 41187118,
+        "min_ns": 4238566542,
+        "max_ns": 4328516375
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.o",
+        "cc -Iinclude -std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O2/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O2/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "standalone-c-O3",
+      "implementation": "standalone-c",
+      "optimization": "O3",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 33664,
+      "durations_ns": [
+        4300038708,
+        4307070250,
+        4226569541,
+        4377533083,
+        4632642167
+      ],
+      "statistics": {
+        "median_ns": 4307070250,
+        "mean_ns": 4368770749,
+        "stdev_ns": 156889397,
+        "min_ns": 4226569541,
+        "max_ns": 4632642167
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.o",
+        "cc -Iinclude -std=c11 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "ctypes-O3",
+      "implementation": "ctypes",
+      "optimization": "O3",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 16784,
+      "durations_ns": [
+        4328826583,
+        4321619666,
+        4337414333,
+        4250180958,
+        4307540833
+      ],
+      "statistics": {
+        "median_ns": 4321619666,
+        "mean_ns": 4309116474,
+        "stdev_ns": 34718383,
+        "min_ns": 4250180958,
+        "max_ns": 4337414333
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.o",
+        "cc -Iinclude -std=c11 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -O3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/O3/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/O3/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "standalone-c-Os",
+      "implementation": "standalone-c",
+      "optimization": "Os",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 33664,
+      "durations_ns": [
+        6436235250,
+        6318890625,
+        6497772917,
+        5978946209,
+        6068431750
+      ],
+      "statistics": {
+        "median_ns": 6318890625,
+        "mean_ns": 6260055350,
+        "stdev_ns": 227350248,
+        "min_ns": 5978946209,
+        "max_ns": 6497772917
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -Os -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.o",
+        "cc -Iinclude -std=c11 -Os -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -Os -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "ctypes-Os",
+      "implementation": "ctypes",
+      "optimization": "Os",
+      "checksum": "14011015563422644207",
+      "artifact_size_bytes": 16784,
+      "durations_ns": [
+        6329813500,
+        6569980917,
+        6319713541,
+        6004172041,
+        6143473625
+      ],
+      "statistics": {
+        "median_ns": 6319713541,
+        "mean_ns": 6273430724,
+        "stdev_ns": 213689154,
+        "min_ns": 6004172041,
+        "max_ns": 6569980917
+      },
+      "build_commands": [
+        "cc -Iinclude -std=c11 -Os -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.o",
+        "cc -Iinclude -std=c11 -Os -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -c src/benchmark_main.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/benchmark_main.o",
+        "cc /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/benchmark_main.o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/bin/benchmark-slices",
+        "cc -Iinclude -std=c11 -Os -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -fPIC -c src/slices.c -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.pic.o",
+        "cc -dynamiclib /Users/htaschne/clones/investigating-the-snake/build/bench/Os/obj/slices.pic.o -o /Users/htaschne/clones/investigating-the-snake/build/bench/Os/lib/libslices.dylib"
+      ],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,1 +1,2 @@
 results/*.json
+!results/reference-darwin-arm64-clang17.json

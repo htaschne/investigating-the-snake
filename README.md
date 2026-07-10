@@ -1,62 +1,170 @@
-# Python is really fun... but it's also slow sometimes. What if it could run faster?
+# Investigating the Snake
 
-## Motivation
-Don't you like when you can code in a high level, interpreted, super cool and disruptive language without the disadvantages of it? Me too.
+Five years ago, I ran a small experiment and concluded that Python calling C through `ctypes` was faster than a standalone C program.
 
-## Experiment
-> C is a systems programming language with low overhead in the runtime as the compiler tries to minimize it, so it must be one of the fastest languages to run programs.
-> Python is an interpreted language which focus on readability and writability with a lot of overhead in the runtime, so it should be slower than C.
-> If I could call C from Python how much faster could it get?
+That result was wrong. This repository is the investigation into why.
 
-So the experiment consists in implementing the same algorithm in C and Python and comparing the time each of them takes with the time the Python version which calls C takes.
+## The Experiment
 
-## Setup
-For the test I've used a costly function which generates the [number of divisors of highly composite odd numbers](https://oeis.org/A053640) up until ```100000```. It's not optimized on purpose.
+The program scans integers and counts how many ways each one can be written as a sum of one or more consecutive positive integers. For example:
 
-## Benchmarking
-I've used the ```time``` program to measure the time each program takes. The results I've found are in the ```benchmark_``` files.
+```text
+9 = 9
+9 = 4 + 5
+9 = 2 + 3 + 4
+```
 
-## Build and run
+So `slices(9) = 3`.
+
+This count is related to the number of odd divisors of an integer, and the record-setting values line up with [OEIS A053640](https://oeis.org/A053640). The algorithm here is intentionally direct rather than mathematically optimized, because the project is about implementation boundaries and benchmarking.
+
+The original comparison was:
+
+1. Pure Python.
+2. Standalone C.
+3. Python calling the C implementation through `ctypes`.
+
+## What Went Wrong
+
+The historical result files in `results/` are preserved as artifacts, but they are not reliable benchmark evidence. The modernization found several problems:
+
+- The Python and C implementations were not initially equivalent.
+- Python used floating-point division where the C code used integer division.
+- The `ctypes` boundary relied on default argument and return types instead of explicit signed 64-bit declarations.
+- The standalone executable and shared library were built with different flags.
+- The benchmark used shell timings without warmups, repeated runs, correctness gates, or build provenance.
+
+In short: the benchmark was the bug.
+
+## Verified Result
+
+With equivalent builds and a shared checksum, standalone C and Python-through-`ctypes` now produce the same results. On the tested machine, optimized C builds were substantially faster than `-O0`, and `ctypes` overhead was small relative to this workload.
+
+Reference environment:
+
+- Apple Clang 17.0.0
+- Darwin 25.5.0
+- arm64
+- Python 3.13.13
+- Workload: `slices(n)` for `0 <= n < 100000`
+- Warmups: 1
+- Measured runs: 5
+- Checksum: `14011015563422644207`
+- Result file: `benchmarks/results/reference-darwin-arm64-clang17.json`
+
+Representative medians from that result, using standalone C `-O0` as the baseline:
+
+| Implementation | Optimization | Median | Relative |
+| --- | ---: | ---: | ---: |
+| Standalone C | `-O0` | 11.781 s | 1.00x |
+| Standalone C | `-O1` | 4.298 s | 2.74x |
+| Standalone C | `-O2` | 4.394 s | 2.68x |
+| Standalone C | `-O3` | 4.307 s | 2.74x |
+| Standalone C | `-Os` | 6.319 s | 1.86x |
+| `ctypes` | `-O0` | 11.330 s | 1.04x |
+| `ctypes` | `-O1` | 4.314 s | 2.73x |
+| `ctypes` | `-O2` | 4.317 s | 2.73x |
+| `ctypes` | `-O3` | 4.322 s | 2.73x |
+| `ctypes` | `-Os` | 6.320 s | 1.86x |
+
+This does not mean `ctypes` has zero overhead, and it does not say anything universal about C optimization. It says that the old conclusion was not supported, and that for this implementation on this machine, the optimized builds were about 2.6x faster than `-O0`.
+
+## How It Works
+
+The C implementation exposes a small public API:
+
+```c
+int64_t slices(int64_t n);
+```
+
+The standalone executable and benchmark executable both call that API. The Python FFI runner loads the generated shared library with `ctypes` and declares:
+
+```python
+argtypes = [ctypes.c_int64]
+restype = ctypes.c_int64
+```
+
+Equivalence tests compile a temporary shared library, load it through `ctypes`, and compare C against Python for known examples, historical record-holder inputs, and every value from `0` through `9999`.
+
+## Build and Run
+
 ```bash
 make
 make run
 make ffi
 make test
 make check
-make benchmark-smoke
-make benchmark
 ```
 
-Generated artifacts are written under `build/`. The default build currently uses `-O0` so the standalone executable and shared library share the same explicit baseline; benchmark-oriented optimization comparisons are still future work. Build flags can be overridden, for example:
+Generated binaries and libraries go under `build/`. The default developer build uses `-O0` as an explicit baseline. You can override flags when needed:
 
 ```bash
 make clean
 make CFLAGS="-std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion"
 ```
 
-The historical timings below are preserved as context and are not yet a reproducible benchmark.
+The compatibility script still works, but delegates to the Makefile:
 
-## Reproducible benchmarks
+```bash
+./create_so_file.sh
+```
+
+## Benchmarking
+
+Quick smoke check:
+
 ```bash
 make benchmark-smoke
+```
+
+Standard repeated benchmark:
+
+```bash
 make benchmark
 make benchmark-analyze
+```
+
+Generate assembly for inspection:
+
+```bash
 make benchmark-asm
 ```
 
-`make benchmark-smoke` is a quick non-authoritative check. `make benchmark` rebuilds standalone C and ctypes benchmark artifacts for `-O0`, `-O1`, `-O2`, `-O3`, and `-Os`, verifies matching checksums, and writes timestamped JSON under `benchmarks/results/`. The default Makefile benchmark excludes pure Python so routine runs do not take the historical long path; include it explicitly with:
+`make benchmark` rebuilds standalone C and `ctypes` artifacts for `-O0`, `-O1`, `-O2`, `-O3`, and `-Os`, verifies matching checksums, randomizes execution order with a deterministic seed, and writes timestamped JSON files under `benchmarks/results/`. Generated benchmark binaries and assembly live under `build/`.
+
+Pure Python is excluded by default because the original workload is much slower. For a quick pure-Python check, include it explicitly with a smaller workload:
 
 ```bash
-make benchmark BENCH_INCLUDE_PYTHON=--include-python
+make benchmark BENCH_LIMIT=1000 BENCH_WARMUPS=0 BENCH_RUNS=3 BENCH_INCLUDE_PYTHON=--include-python
 ```
 
-The benchmark limit, warmups, runs, and seed can be overridden with `BENCH_LIMIT`, `BENCH_WARMUPS`, `BENCH_RUNS`, and `BENCH_SEED`. Benchmarks depend on hardware, compiler, workload, and system load, so JSON results are generated artifacts rather than final claims.
+For an authoritative pure-Python comparison, use the same limit and repetition policy as the other implementations. You can adjust the workload with:
 
-## Results
-The  C compiled with ```-O2``` optimization always takes ```37 seconds``` on my machine, not once it got down to 36 or up to 38 in 100 tests. The Python version finishes at the ```20 minutes``` mark with less than a minute of _floatuation_. Calling C from Python raises some questions because it's faster than the C code itself!? It finish at the ```16 seconds``` mark.
+```bash
+make benchmark BENCH_LIMIT=25000 BENCH_WARMUPS=1 BENCH_RUNS=5
+```
 
-## Reasoning
- I could not found why calling C from Python is faster than pure C. I imagine that for a larger input that may change, but I can't test that on my machine as it takes forever to finish. Another thing that comes to mind is that maybe there are some optimizations that Python does that are not enabled in C by default. I don't know, needs further investigation, if you have any ideas I'd be happy to try it out!
+Generated timestamped benchmark sessions are ignored by Git. The committed reference result is intentionally selected for documentation.
 
-## Resources
-I've followed [this](https://www.journaldev.com/31907/calling-c-functions-from-python) tutorial to learn how to compile and call C from Python.
+## Project Structure
+
+```text
+.
+├── include/       # Public C API
+├── src/           # C library and executable entry points
+├── tests/         # Python/C equivalence tests
+├── benchmarks/    # Benchmark harness, analysis, and selected reference result
+├── results/       # Original historical timings
+├── Makefile
+└── README.md
+```
+
+## Notes and Limitations
+
+- Results are machine-, compiler-, workload-, and environment-specific.
+- Scheduler noise, thermal state, and CPU frequency behavior are not fully controlled.
+- The benchmark harness times standalone C as a subprocess, so process startup is included there; Python and `ctypes` workloads run in-process.
+- The algorithm is intentionally not replaced with the best mathematical shortcut.
+- This project compares these execution paths for this implementation, not the best possible implementation of the underlying mathematical function.
+
+The next useful step is not adding more languages. It is keeping the story honest: correctness first, reproducible builds second, benchmark claims last.
