@@ -1,7 +1,12 @@
 #include <stdio.h>
-#include <stddef.h>
+#include <stdint.h>
+#include <inttypes.h>
 
 int64_t slices(int64_t n) {
+  if (n <= 0) {
+    return 0;
+  }
+
   int64_t a = 1, b = 2, acc = 0;
   while (a < n) {
     int64_t s = (a + b) * (b - a + 1) / 2;
@@ -17,13 +22,13 @@ int64_t slices(int64_t n) {
   return acc + 1;
 }
 
-int main() {
-  int32_t n = 100000;
-  int32_t best = 0;
+int main(void) {
+  int64_t n = 100000;
+  int64_t best = 0;
   for (int64_t i = 0; i < n; ++i) {
     int64_t ret = slices(i);
     if (ret > best) {
-      printf("found new best at: %lld = %lld\n", i, ret);
+      printf("found new best at: %" PRId64 " = %" PRId64 "\n", i, ret);
       best = ret;
     }
   }

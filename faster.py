@@ -2,11 +2,13 @@
 
 import sys
 
-from ctypes import *
+import ctypes
 
 if __name__ == '__main__':
   # fast functions
-  ff = CDLL(sys.argv[1])
+  ff = ctypes.CDLL(sys.argv[1])
+  ff.slices.argtypes = [ctypes.c_int64]
+  ff.slices.restype = ctypes.c_int64
 
   best = 0
   n = 100000

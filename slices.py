@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
 def slices(n: int) -> int:
-  acc, a, b = 0, 0, 1
+  if n <= 0:
+    return 0
+
+  acc, a, b = 0, 1, 2
   while a < n:
-    s = (a + b) * (b - a + 1) / 2;
+    s = (a + b) * (b - a + 1) // 2
 
     if s == n:
       acc += 1
