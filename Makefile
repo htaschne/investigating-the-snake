@@ -31,9 +31,14 @@ MAIN_OBJ := $(OBJ_DIR)/main.o
 SLICES_OBJ := $(OBJ_DIR)/slices.o
 SLICES_PIC_OBJ := $(OBJ_DIR)/slices.pic.o
 
-PYTHON_SOURCES := faster.py slices.py tests/test_equivalence.py
+PYTHON_SOURCES := faster.py slices.py tests/test_equivalence.py benchmarks/analyze.py benchmarks/run.py benchmarks/workloads.py
+BENCH_LIMIT ?= 100000
+BENCH_WARMUPS ?= 1
+BENCH_RUNS ?= 5
+BENCH_SEED ?= 42
+BENCH_INCLUDE_PYTHON ?=
 
-.PHONY: all run shared ffi test check clean benchmark-smoke
+.PHONY: all run shared ffi test check clean benchmark-smoke benchmark benchmark-analyze benchmark-asm
 
 all: $(TARGET) $(SHARED_LIB)
 
@@ -53,15 +58,27 @@ check: all test
 	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) -m py_compile $(PYTHON_SOURCES)
 	@if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then git diff --check; fi
 
-benchmark-smoke: $(TARGET) $(SHARED_LIB)
-	@echo "Non-authoritative smoke timing; this is not the benchmark harness."
-	@echo "Standalone C:"
-	@time $(TARGET) >/dev/null
-	@echo "Python + ctypes:"
-	@time $(PYTHON) faster.py $(SHARED_LIB) >/dev/null
+benchmark-smoke:
+	@echo "Non-authoritative smoke benchmark; use make benchmark for repeated measurements."
+	$(PYTHON) benchmarks/run.py --limit 1000 --warmups 0 --runs 1 --seed $(BENCH_SEED)
+
+benchmark:
+	$(PYTHON) benchmarks/run.py --limit $(BENCH_LIMIT) --warmups $(BENCH_WARMUPS) --runs $(BENCH_RUNS) --seed $(BENCH_SEED) --generate-asm $(BENCH_INCLUDE_PYTHON)
+
+benchmark-analyze:
+	@if [ -z "$(RESULT)" ]; then \
+		result=$$(ls -t benchmarks/results/*.json 2>/dev/null | head -n 1); \
+		if [ -z "$$result" ]; then echo "set RESULT=path or run make benchmark first" >&2; exit 1; fi; \
+	else \
+		result="$(RESULT)"; \
+	fi; \
+	$(PYTHON) benchmarks/analyze.py "$$result"
+
+benchmark-asm:
+	$(PYTHON) benchmarks/run.py --generate-asm --asm-only
 
 clean:
-	rm -rf $(BUILD_DIR) __pycache__ tests/__pycache__
+	rm -rf $(BUILD_DIR) __pycache__ tests/__pycache__ benchmarks/__pycache__
 
 $(TARGET): $(MAIN_OBJ) $(SLICES_OBJ) | $(BIN_DIR)
 	$(CC) $(LDFLAGS) $(MAIN_OBJ) $(SLICES_OBJ) -o $@

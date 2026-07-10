@@ -24,6 +24,7 @@ make ffi
 make test
 make check
 make benchmark-smoke
+make benchmark
 ```
 
 Generated artifacts are written under `build/`. The default build currently uses `-O0` so the standalone executable and shared library share the same explicit baseline; benchmark-oriented optimization comparisons are still future work. Build flags can be overridden, for example:
@@ -34,6 +35,22 @@ make CFLAGS="-std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversio
 ```
 
 The historical timings below are preserved as context and are not yet a reproducible benchmark.
+
+## Reproducible benchmarks
+```bash
+make benchmark-smoke
+make benchmark
+make benchmark-analyze
+make benchmark-asm
+```
+
+`make benchmark-smoke` is a quick non-authoritative check. `make benchmark` rebuilds standalone C and ctypes benchmark artifacts for `-O0`, `-O1`, `-O2`, `-O3`, and `-Os`, verifies matching checksums, and writes timestamped JSON under `benchmarks/results/`. The default Makefile benchmark excludes pure Python so routine runs do not take the historical long path; include it explicitly with:
+
+```bash
+make benchmark BENCH_INCLUDE_PYTHON=--include-python
+```
+
+The benchmark limit, warmups, runs, and seed can be overridden with `BENCH_LIMIT`, `BENCH_WARMUPS`, `BENCH_RUNS`, and `BENCH_SEED`. Benchmarks depend on hardware, compiler, workload, and system load, so JSON results are generated artifacts rather than final claims.
 
 ## Results
 The  C compiled with ```-O2``` optimization always takes ```37 seconds``` on my machine, not once it got down to 36 or up to 38 in 100 tests. The Python version finishes at the ```20 minutes``` mark with less than a minute of _floatuation_. Calling C from Python raises some questions because it's faster than the C code itself!? It finish at the ```16 seconds``` mark.
