@@ -3,6 +3,7 @@ import importlib.util
 import pathlib
 import re
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -19,7 +20,9 @@ def load_python_module():
 
 def load_c_library():
   temp_dir = tempfile.TemporaryDirectory()
-  library_path = pathlib.Path(temp_dir.name) / "slices.so"
+  suffix = ".dylib" if sys.platform == "darwin" else ".so"
+  library_path = pathlib.Path(temp_dir.name) / f"libslices{suffix}"
+  shared_flags = ["-dynamiclib", "-fPIC"] if sys.platform == "darwin" else ["-shared", "-fPIC"]
   subprocess.run(
     [
       "cc",
@@ -29,11 +32,12 @@ def load_c_library():
       "-Wpedantic",
       "-Wconversion",
       "-Wsign-conversion",
-      "-fPIC",
-      "-shared",
+      "-I",
+      str(ROOT / "include"),
+      *shared_flags,
       "-o",
       str(library_path),
-      str(ROOT / "slices.c"),
+      str(ROOT / "src" / "slices.c"),
     ],
     check=True,
     cwd=ROOT,
@@ -99,6 +103,10 @@ class SlicesEquivalenceTest(unittest.TestCase):
     for n in inputs:
       with self.subTest(n=n):
         self.assertPythonAndCAgree(n)
+
+  def test_shared_library_does_not_export_main(self):
+    with self.assertRaises(AttributeError):
+      getattr(self.c_library, "main")
 
 
 if __name__ == "__main__":
