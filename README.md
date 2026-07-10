@@ -16,6 +16,25 @@ For the test I've used a costly function which generates the [number of divisors
 ## Benchmarking
 I've used the ```time``` program to measure the time each program takes. The results I've found are in the ```benchmark_``` files.
 
+## Build and run
+```bash
+make
+make run
+make ffi
+make test
+make check
+make benchmark-smoke
+```
+
+Generated artifacts are written under `build/`. The default build currently uses `-O0` so the standalone executable and shared library share the same explicit baseline; benchmark-oriented optimization comparisons are still future work. Build flags can be overridden, for example:
+
+```bash
+make clean
+make CFLAGS="-std=c11 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion"
+```
+
+The historical timings below are preserved as context and are not yet a reproducible benchmark.
+
 ## Results
 The  C compiled with ```-O2``` optimization always takes ```37 seconds``` on my machine, not once it got down to 36 or up to 38 in 100 tests. The Python version finishes at the ```20 minutes``` mark with less than a minute of _floatuation_. Calling C from Python raises some questions because it's faster than the C code itself!? It finish at the ```16 seconds``` mark.
 

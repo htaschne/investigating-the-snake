@@ -3,4 +3,6 @@
 *.o
 *.so
 *.dylib
+__pycache__/
+*.pyc
 build/
